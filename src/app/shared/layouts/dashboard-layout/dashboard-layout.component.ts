@@ -17,4 +17,5 @@ export class DashboardLayoutComponent {
   toggleSidebar() {
     this.isSidebarCollapsed = !this.isSidebarCollapsed; // Cambia el estado
   }
+  
 }

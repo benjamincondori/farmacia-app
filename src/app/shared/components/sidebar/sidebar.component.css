@@ -1,9 +1,4 @@
-.slimscroll-menu {
-  .menu-arrow {
-    float: right;
-    transition: transform 0.3s;
-  }
-
+/* .slimscroll-menu { */
   .nav-second-level {
     display: none;
     list-style: none;
@@ -13,4 +8,14 @@
   .nav-second-level.show {
     display: block; 
   }
-}
+  
+  .menu-arrow {
+    float: right;
+    transition: transform 0.3s;
+  }
+
+  .menu-arrow.open {
+    transform: rotate(90deg);
+  }
+
+/* } */

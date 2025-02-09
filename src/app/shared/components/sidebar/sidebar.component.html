@@ -6,217 +6,142 @@
       <ul class="metismenu" id="side-menu">
 
           <li>
-              <a href="">
+              <a href="#">
                   <i class="fas fa-home"></i>
                   <span> Dashboard </span>
               </a>
           </li>
           
           <li>
-            <a href="javascript: void(0);" (click)="toggleSubmenu($event)">
-                <i class="fas fa-shopping-bag"></i>
-                <span> Compras </span>
-                <span class="menu-arrow"></span>
-            </a>
-            <ul class="nav-second-level" [class.show]="submenuOpen">
-                <li>
-                    <a href="#">Compras</a>
-                </li>
-                <li>
-                    <a href="#">Devoluciones</a>
-                </li>
-            </ul>
-        </li>
-
-          <!-- @if (verificarPermiso(config('permisos.USUARIOS.LISTAR_USUARIOS')))
-          <li>
-              <a href="{{route('usuarios.index')}}">
+              <a routerLink="/dashboard/usuario/list" routerLinkActive="active" >
                   <i class="fas fa-user-cog"></i>
                   <span> Usuarios </span>
               </a>
           </li>
-          @endif
-
-          @if (verificarPermiso(config('permisos.ROLES.LISTAR_ROLES')) ||
-          verificarPermiso(config('permisos.PERMISOS.LISTAR_PERMISOS')) ||
-          verificarPermiso(config('permisos.PERMISOS.ASIGNAR_PERMISOS')))
+          
           <li>
-              <a href="javascript: void(0);">
+              <a href="javascript: void(0);" (click)="toggleSubmenu('roles')">
                   <i class="fas fa-key"></i>
                   <span> Roles y Permisos </span>
                   <span class="menu-arrow"></span>
               </a>
-              <ul class="nav-second-level" aria-expanded="false">
-                  @if (verificarPermiso(config('permisos.ROLES.LISTAR_ROLES')))
+              <ul class="nav-second-level" [class.show]="openSubmenu === 'roles'">
                   <li>
-                      <a href="{{route('roles.index')}}">Roles</a>
+                      <a routerLink="/dashboard/rol/list" routerLinkActive="active">Roles</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.PERMISOS.LISTAR_PERMISOS')))
                   <li>
-                      <a href="{{ route('permisos.index') }}">Permisos</a>
+                      <a routerLink="/dashboard/permiso/list" routerLinkActive="active">Permisos</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.PERMISOS.ASIGNAR_PERMISOS')))
                   <li>
-                      <a href="{{ route('permisos.asignar') }}">Asignar Permisos a Roles</a>
+                      <a href="#">Asignar Permisos a Roles</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.PERMISOS.ASIGNAR_ROLES_PERMISOS')))
                   <li>
-                      <a href="{{ route('permisos.asignarRolPermiso') }}">Asignar Roles a Usuarios</a>
+                      <a href="#">Asignar Roles a Usuarios</a>
                   </li>
-                  @endif
               </ul>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.CLIENTES.LISTAR_CLIENTES')))
           <li>
-              <a href="{{ route('clientes.index') }}">
+              <a routerLink="/dashboard/cliente/list" routerLinkActive="active">
                   <i class="fas fa-users"></i>
                   <span> Clientes </span>
               </a>
           </li>
-          @endif
 
 
-          @if (verificarPermiso(config('permisos.PRODUCTOS.LISTAR_PRODUCTOS')) ||
-          verificarPermiso(config('permisos.ALMACENES.LISTAR_ALMACENES')) ||
-          verificarPermiso(config('permisos.CATEGORIAS.LISTAR_CATEGORIAS')) ||
-          verificarPermiso(config('permisos.LABORATORIOS.LISTAR_LABORATORIOS')))
           <li>
-              <a href="javascript: void(0);">
+              <a href="javascript: void(0);" (click)="toggleSubmenu('productos')">
                   <i class="fas fa-boxes"></i>
                   <span> Productos </span>
                   <span class="menu-arrow"></span>
               </a>
-              <ul class="nav-second-level" aria-expanded="false">
-                  @if (verificarPermiso(config('permisos.PRODUCTOS.LISTAR_PRODUCTOS')))
+              <ul class="nav-second-level" [class.show]="openSubmenu === 'productos'">
                   <li>
-                      <a href="{{ route('productos.index') }}">Productos</a>
+                      <a routerLink="/dashboard/producto/list" routerLinkActive="active">Productos</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.CATEGORIAS.LISTAR_CATEGORIAS')))
                   <li>
-                      <a href="{{ route('categorias.index') }}">Categorías</a>
+                      <a routerLink="/dashboard/categoria/list" routerLinkActive="active">Categorías</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.LABORATORIOS.LISTAR_LABORATORIOS')))
                   <li>
-                      <a href="{{ route('laboratorios.index') }}">Laboratorios</a>
+                      <a routerLink="/dashboard/laboratorio/list" routerLinkActive="active">Laboratorios</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.ALMACENES.LISTAR_ALMACENES')))
                   <li>
-                      <a href="{{ route('almacenes.index') }}">Almacenes</a>
+                      <a routerLink="/dashboard/almacen/list" routerLinkActive="active">Almacenes</a>
                   </li>
-                  @endif
               </ul>
           </li>
-          @endif
-
-          @if (verificarPermiso(config('permisos.AJUSTES_INVENTARIO.LISTAR_AJUSTE_INVENTARIO')))
+          
           <li>
-              <a href="{{ route('ajustes.index') }}">
+              <a routerLink="/dashboard/ajuste-inventario/list" routerLinkActive="active">
                   <i class="fas fa-layer-group"></i>
                   <span> Ajuste Inventario </span>
               </a>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.PROVEEDORES.LISTAR_PROVEEDORES')))
           <li>
-              <a href="{{ route('proveedor.index') }}">
+              <a href="#">
                   <i class="fas fas fa-truck"></i>
                   <span> Proveedores </span>
               </a>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.COMPRAS.LISTAR_COMPRAS')) ||
-          verificarPermiso(config('permisos.DEVOLUCIONES.LISTAR_DEVOLUCIONES')))
           <li>
-              <a href="javascript: void(0);">
+              <a href="javascript: void(0);" (click)="toggleSubmenu('compras')">
                   <i class="fas fa-shopping-bag"></i>
                   <span> Compras </span>
                   <span class="menu-arrow"></span>
               </a>
-              <ul class="nav-second-level" aria-expanded="false">
-                  @if (verificarPermiso(config('permisos.COMPRAS.LISTAR_COMPRAS')))
+              <ul class="nav-second-level" [class.show]="openSubmenu === 'compras'">
                   <li>
-                      <a href="{{ route('compras.index') }}">Compras</a>
+                      <a href="#">Compras</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.DEVOLUCIONES.LISTAR_DEVOLUCIONES')))
                   <li>
-                      <a href="{{ route('devoluciones.index') }}">Devoluciones</a>
+                      <a href="#">Devoluciones</a>
                   </li>
-                  @endif
               </ul>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.VENTAS.LISTAR_VENTAS')))
           <li>
-              <a href="{{ route('ventas.index')}}">
+              <a routerLink="/dashboard/venta/list" routerLinkActive="active">
                   <i class="fas fa-shopping-cart"></i>
                   <span> Ventas </span>
               </a>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.PAGOS.LISTAR_PAGOS')) ||
-          verificarPermiso(config('permisos.METODOS_PAGO.LISTAR_METODOS_PAGO')))
           <li>
-              <a href="javascript: void(0);">
+              <a href="javascript: void(0);" (click)="toggleSubmenu('pagos')">
                   <i class="fas fa-donate"></i>
                   <span> Pagos </span>
                   <span class="menu-arrow"></span>
               </a>
-              <ul class="nav-second-level" aria-expanded="false">
-                  @if (verificarPermiso(config('permisos.PAGOS.LISTAR_PAGOS')))
+              <ul class="nav-second-level" [class.show]="openSubmenu === 'pagos'">
                   <li>
-                      <a href="{{ route('pagos.index') }}">Pagos</a>
+                      <a href="#">Pagos</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.METODOS_PAGO.LISTAR_METODOS_PAGO')))
                   <li>
-                      <a href="{{route('metodos-pago.index')}}">Metodos de pago</a>
+                      <a href="#">Metodos de pago</a>
                   </li>
-                  @endif
               </ul>
           </li>
-          @endif
 
-          @if (verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_VENTAS')) ||
-          verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_COMPRAS')) ||
-          verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_PAGOS')))
           <li>
-              <a href="javascript: void(0);">
+              <a href="javascript: void(0);" (click)="toggleSubmenu('reportes')">
                   <i class="fas fa-file-alt"></i>
                   <span> Reportes </span>
                   <span class="menu-arrow"></span>
               </a>
-              <ul class="nav-second-level" aria-expanded="false">
-                  @if (verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_VENTAS')))
+              <ul class="nav-second-level" [class.show]="openSubmenu === 'reportes'">
                   <li>
-                      <a href="{{ route('reportes.ventas') }}">Reporte de Ventas</a>
+                      <a href="#">Reporte de Ventas</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_COMPRAS')))
                   <li>
-                      <a href="{{ route('reportes.compras') }}">Reporte de Compras</a>
+                      <a href="#">Reporte de Compras</a>
                   </li>
-                  @endif
-                  @if (verificarPermiso(config('permisos.REPORTES.LISTA_REPORTE_PAGOS')))
                   <li>
-                      <a href="{{ route('reportes.pagos') }}">Reporte de Pagos</a>
+                      <a href="#">Reporte de Pagos</a>
                   </li>
-                  @endif
               </ul>
           </li>
-          @endif -->
 
 
       </ul>

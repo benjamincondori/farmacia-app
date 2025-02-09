@@ -18,6 +18,65 @@ export const routes: Routes = [
             (m) => m.CategoriaRoutes
           ),
       },
+      {
+        path: 'rol',
+        loadChildren: () =>
+          import('./modules/rol/rol.routes').then((m) => m.RolRoutes),
+      },
+      {
+        path: 'permiso',
+        loadChildren: () =>
+          import('./modules/permiso/permiso.routes').then(
+            (m) => m.PermisoRoutes
+          ),
+      },
+      {
+        path: 'cliente',
+        loadChildren: () =>
+          import('./modules/cliente/cliente.routes').then(
+            (m) => m.ClienteRoutes
+          ),
+      },
+      {
+        path: 'laboratorio',
+        loadChildren: () =>
+          import('./modules/laboratorio/laboratorio.routes').then(
+            (m) => m.LaboratorioRoutes
+          ),
+      },
+      {
+        path: 'almacen',
+        loadChildren: () =>
+          import('./modules/almacen/almacen.routes').then(
+            (m) => m.AlmacenRoutes
+          ),
+      },
+      {
+        path: 'producto',
+        loadChildren: () =>
+          import('./modules/producto/producto.routes').then(
+            (m) => m.ProductoRoutes
+          ),
+      },
+      {
+        path: 'venta',
+        loadChildren: () =>
+          import('./modules/venta/venta.routes').then((m) => m.VentaRoutes),
+      },
+      {
+        path: 'ajuste-inventario',
+        loadChildren: () =>
+          import('./modules/ajuste-inventario/ajuste.routes').then(
+            (m) => m.AjusteRoutes
+          ),
+      },
+      {
+        path: 'usuario',
+        loadChildren: () =>
+          import('./modules/usuario/usuario.routes').then(
+            (m) => m.UsuarioRoutes
+          ),
+      },
     ],
   },
   {

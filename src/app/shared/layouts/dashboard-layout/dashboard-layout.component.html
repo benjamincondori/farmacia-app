@@ -1,38 +1,18 @@
 <div id="wrapper">
-  <app-navbar></app-navbar> <!-- Escucha el evento -->
+  <app-navbar></app-navbar>
+  <!-- Escucha el evento -->
 
   <!-- ========== Left Sidebar Start ========== -->
   <div class="left-side-menu">
-    <app-sidebar></app-sidebar> <!-- Envía el estado -->
+    <app-sidebar></app-sidebar>
+    <!-- Envía el estado -->
   </div>
-  
+
   <!-- ========== Start Page Content here ========== -->
   <div class="content-page">
     <div id="content">
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="page-title-box">
-                <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">
-                      <a href="javascript: void(0);">Panel Admin</a>
-                    </li>
-                    <!-- @if(!empty( $subtitle ))
-                                      <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $title }}</a></li>
-                                      <li class="breadcrumb-item active">{{ $subtitle }}</li>
-                                      @else
-                                      <li class="breadcrumb-item active">{{ $title }}</li>
-                                      @endif -->
-                  </ol>
-                </div>
-                <h4 class="page-title">Titulo de la pagina</h4>
-              </div>
-            </div>
-          </div>
-          <!-- end page title -->
-
           <router-outlet></router-outlet>
         </div>
       </div>
@@ -42,46 +22,3 @@
     <app-footer></app-footer>
   </div>
 </div>
-
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const searchInput = document.getElementById('search-input');
-      const resultsContainer = document.getElementById('search-results');
-
-      searchInput.addEventListener('input', function () {
-          let query = this.value.trim();
-
-          if (query.length === 0) {
-              resultsContainer.style.display = 'none';
-              resultsContainer.innerHTML = '';
-              return;
-          }
-
-          fetch(`/search?query=${query}`)
-              .then(response => response.json())
-              .then(data => {
-                  resultsContainer.innerHTML = '';
-                  if (data.length === 0) {
-                      resultsContainer.innerHTML = '<div class="list-group-item">No se encontraron resultados</div>';
-                  } else {
-                      data.forEach(item => {
-                          let element = document.createElement('a');
-                          element.href = item.url;
-                          element.classList.add('list-group-item', 'list-group-item-action');
-                          element.textContent = item.title;
-                          resultsContainer.appendChild(element);
-                      });
-                  }
-                  resultsContainer.style.display = 'block';
-              })
-              .catch(error => console.error('Error en la búsqueda:', error));
-      });
-
-      // Ocultar los resultados si el usuario hace clic fuera
-      document.addEventListener('click', function (event) {
-          if (!searchInput.contains(event.target) && !resultsContainer.contains(event.target)) {
-              resultsContainer.style.display = 'none';
-          }
-      });
-  });
-  </script> -->
