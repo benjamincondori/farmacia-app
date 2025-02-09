@@ -6,3 +6,7 @@ button.dt-paging-button.first,  button.dt-paging-button.last {
 table.dataTable thead th, table.dataTable tbody th {
   text-align: center !important; 
 }
+
+table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date, table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date {
+  text-align: center !important; 
+}

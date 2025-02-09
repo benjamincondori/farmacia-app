@@ -27,18 +27,24 @@ export class ValidatorsService {
       maxlength: 'La longitud máxima requerida es de {{requiredLength}} caracteres',
       fileExtension: 'El archivo debe ser una imagen con extensión jpg, jpeg o png',
       fileSize: 'El tamaño del archivo no debe superar los {{requiredLength}} bytes',
+      min: 'El valor mínimo permitido es {{min}}',
+      max: 'El valor máximo permitido es {{max}}',
     };
     
     // Obtener el primer error y devolver su mensaje correspondiente
     const firstErrorKey = Object.keys(formControl.errors)[0];
     const error = formControl.errors[firstErrorKey];
-
+    
     if (firstErrorKey === 'minlength' || firstErrorKey === 'maxlength') {
       return errorMessages[firstErrorKey].replace('{{requiredLength}}', error.requiredLength);
     }
     
     if (firstErrorKey === 'fileSize') {
       return errorMessages[firstErrorKey].replace('{{requiredLength}}', error.requiredLength);
+    }
+    
+    if (firstErrorKey === 'min' || firstErrorKey === 'max') {
+      return errorMessages[firstErrorKey].replace('{{min}}', error.min).replace('{{max}}', error.max);
     }
     
     return errorMessages[firstErrorKey] || 'Error desconocido';
