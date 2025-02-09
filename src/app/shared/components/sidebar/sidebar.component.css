@@ -1,0 +1,16 @@
+.slimscroll-menu {
+  .menu-arrow {
+    float: right;
+    transition: transform 0.3s;
+  }
+
+  .nav-second-level {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .nav-second-level.show {
+    display: block; 
+  }
+}
