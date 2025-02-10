@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertsService } from '../../../shared/services/alerts.service';
 import { ValidatorsService } from '../../../shared/services/validators.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../service/auth.service';
+import { User } from '../../../interfaces/user.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
+  user!: User;
+  errorMessage: string | null = null;
   
   constructor(
     private alertServive: AlertsService,
     private validatorsService: ValidatorsService,
+    private authService: AuthService,
+    private router: Router,
     private fb: FormBuilder
   ) {}
 
@@ -25,7 +33,7 @@ export class LoginComponent implements OnInit {
         '',
         [
           Validators.required,
-          this.validatorsService.emailValid,
+          // this.validatorsService.emailValid,
         ],
       ],
       password: [
@@ -35,6 +43,11 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
+    
+    this.user = {
+      username: '',
+      password: '',
+    };
   }
 
   login() {
@@ -45,19 +58,29 @@ export class LoginComponent implements OnInit {
 
     const { email , password } = this.loginForm.value;
     
-    // this.authService.login(this.email, this.password).subscribe({
-    //   next: (response) => {
-    //     this.loading = false;
-    //     this.router.navigate(['/dashboard']);
-    //     this.alertServive.alertSuccess('Usuario autenticado con éxito', 'Éxito');
-    //   },
-    //   error: (error) => {
-    //     this.loading = false;
-    //     console.error('Error en el login:', error);
-    //     this.errorMessage = 'Credenciales inválidas. Intente nuevamente.';
-    //     this.alertServive.alertError('Credenciales inválidas. Intente nuevamente.', 'Error');
-    //   },
-    // });
+    this.user.username = email;
+    this.user.password = password;
+    
+    this.authService.getToken(this.user).subscribe(
+      {
+        next: (response: User) => {
+          console.log('response:', response);
+          sessionStorage.setItem("token", response.token || '');
+          sessionStorage.setItem('user', JSON.stringify(response)); // Guardar los datos del usuario en sessionStorage
+          sessionStorage.setItem('roles', JSON.stringify(response.roles)); // Guardar roles
+          this.redirectToDashboard();
+        },
+        error: (error) => {
+          this.errorMessage = error.message;
+          console.error("Error en login", this.errorMessage);
+          this.router.navigate(['/auth/login']);
+        }
+      }
+    );
+  }
+  
+  redirectToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 
   isInvalidField(field: string): boolean | null {

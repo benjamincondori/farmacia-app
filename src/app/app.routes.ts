@@ -77,6 +77,16 @@ export const routes: Routes = [
             (m) => m.UsuarioRoutes
           ),
       },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./modules/home/home.routes').then((m) => m.HomeRoutes),
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      }
     ],
   },
   {

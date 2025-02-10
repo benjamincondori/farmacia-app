@@ -21,39 +21,37 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="nombre" class="control-label">Nombre</label>
+                <label for="fullname" class="control-label">Nombre Completo</label>
                 <input
                   type="text"
-                  id="nombre"
-                  formControlName="nombre"
+                  id="fullname"
+                  formControlName="fullname"
                   class="form-control"
                   placeholder="Ej: John"
                 />
                 <span
-                  *ngIf="isValidField('nombre')"
+                  *ngIf="isValidField('fullname')"
                   class="form-text text-danger"
                 >
-                  * {{ getMessageError("nombre") }}
+                  * {{ getMessageError("fullname") }}
                 </span>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="apellido" class="control-label">Apellido</label>
+                <label for="username" class="control-label">Usuario</label>
                 <input
                   type="text"
-                  id="apellido"
-                  formControlName="apellido"
+                  formControlName="username"
                   class="form-control"
-                  id="apellido"
-                  name="apellido"
+                  id="username"
                   placeholder="Ej: Doe"
                 />
                 <span
-                  *ngIf="isValidField('apellido')"
+                  *ngIf="isValidField('username')"
                   class="form-text text-danger"
                 >
-                  * {{ getMessageError("apellido") }}
+                  * {{ getMessageError("username") }}
                 </span>
               </div>
             </div>
@@ -96,6 +94,27 @@
                   class="form-text text-danger"
                 >
                   * {{ getMessageError("telefono") }}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="password" class="control-label">Contraseña</label>
+                <input
+                  type="text"
+                  id="password"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="Ej: ********"
+                />
+                <span
+                  *ngIf="isValidField('password')"
+                  class="form-text text-danger"
+                >
+                  * {{ getMessageError("password") }}
                 </span>
               </div>
             </div>

@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
-import { Config } from 'datatables.net';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { AlertsService } from '../../shared/services/alerts.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { Router } from '@angular/router';
-import { PageHeaderComponent } from "../../shared/components/page-header/page-header.component";
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { DataTablesModule } from 'angular-datatables';
+import { User } from '../../interfaces/user.interface';
+import { UsuarioService } from './usuario.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario',
-  imports: [PageHeaderComponent, DataTablesModule],
+  imports: [
+    PageHeaderComponent,
+    DataTablesModule,
+    CommonModule,
+    NgxPaginationModule,
+  ],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css',
 })
@@ -18,76 +26,47 @@ export class UsuarioComponent {
     name: 'Usuarios',
   };
 
-  dtOptions: Config = {};
+  page: number = 1;
+  limit: number = 10;
 
-  usuarios = [
-    {
-      id: 1,
-      nombre: 'Juan',
-      apellido: 'Pérez',
-      email: 'juan@gmail.com',
-      telefono: '1234567890',
-    },
-    {
-      id: 2,
-      nombre: 'María',
-      apellido: 'López',
-      email: 'juan@gmail.com',
-      telefono: '0987654321',
-    },
-    {
-      id: 3,
-      nombre: 'Carlos',
-      apellido: 'Ramírez',
-      email: 'juan@gmail.com',
-      telefono: '1230984567',
-    },
-    {
-      id: 4,
-      nombre: 'Ana',
-      apellido: 'Martínez',
-      email: 'juan@gmail.com',
-      telefono: '0981234567',
-    },
-    {
-      id: 5,
-      nombre: 'Pedro',
-      apellido: 'Gómez',
-      email: 'juan@gmail.com',
-      telefono: '1234560987',
-    },
-    {
-      id: 6,
-      nombre: 'Laura',
-      apellido: 'Torres',
-      email: 'juan@gmail.com',
-      telefono: '0987651098',
-    },
-  ];
+  errorMessage: string | null = null;
+  usuarios: User[] = [];
 
-  constructor(private alertsService: AlertsService, private router: Router) {}
+  constructor(
+    private alertsService: AlertsService,
+    private router: Router,
+    private usuarioService: UsuarioService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.dtOptions = {
-      language: {
-        url: '/assets/libs/datatables/spanish.json',
-      },
-    };
+    // this.usuarioService.usuarios$.subscribe(usuarios => {
+    //   this.usuarios = usuarios;
+    // });
+
+    this.obtenerUsuarios();
   }
 
+  // Cargar los usuarios
+  obtenerUsuarios(): void {
+    this.usuarioService.getUsuarios().subscribe(
+      (data) => {
+        this.usuarios = data;
+        this.errorMessage = null;
+        this.cdr.markForCheck();
+      },
+      (error) => {
+        this.errorMessage = 'Hubo un error al cargar los usuarios';
+        this.cdr.markForCheck();
+      }
+    );
+  }
+
+  // Confirmar la eliminación de un usuario
   async confirmarEliminarUsuario(id: number): Promise<void> {
-    // Buscar la usuario por id
-    const usuario = this.usuarios.find((usuario) => usuario.id === id);
-
-    if (!usuario) {
-      this.alertsService.alertError('El usuario no existe');
-      return;
-    }
-
-    const nombre = usuario.nombre;
     const confirmed = await this.alertsService.showConfirmationDialog({
       title: 'Eliminar Cliente',
-      text: `¿Seguro que deseas eliminar el usuario "${nombre}"?`,
+      text: '¿Seguro que deseas eliminar el usuario?',
     });
 
     if (confirmed) {
@@ -95,15 +74,53 @@ export class UsuarioComponent {
     }
   }
 
+  // Eliminar un usuario
   eliminarUsuario(id: number): void {
-    this.usuarios = this.usuarios.filter((usuario) => usuario.id !== id);
-    this.alertsService.alertSuccess('El usuario se eliminó correctamente');
+    this.usuarioService.deleteUsuario(id).subscribe({
+      next: () => {
+        this.alertsService.alertSuccess('El usuario se eliminó correctamente');
+        this.obtenerUsuarios();
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error al eliminar el usuario:', err);
+        this.alertsService.alertError('Error al eliminar el usuario');
+      },
+    });
   }
 
+  // Cambiar la cantidad de usuarios por página
+  changeLimit(event: any): void {
+    this.limit = event.target.value;
+  }
+
+  // Filtrar usuarios por nombre
+  searchTable(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const searchTerm = target.value.toLowerCase();
+
+    if (searchTerm === '') {
+      // Si el campo de búsqueda está vacío, mostrar todas las productos
+      this.obtenerUsuarios();
+    } else {
+      // Filtrar los usuarios según el nombre
+      this.usuarios = this.usuarios.filter(
+        (usuario) =>
+          // Filtrar por nombre, email y username
+          usuario.username?.toLowerCase().includes(searchTerm) ||
+          usuario.email?.toLowerCase().includes(searchTerm) ||
+          usuario.fullname?.toLowerCase().includes(searchTerm)
+      );
+    }
+    this.page = 1;
+  }
+
+  // Ir a la página de creación de usuario
   goToCreateUsuario(): void {
     this.router.navigate(['/dashboard/usuario/create']);
   }
 
+  // Ir a la página de edición de usuario
   goToEditUsuario(id: number): void {
     this.router.navigate(['/dashboard/usuario/edit', id]);
   }
