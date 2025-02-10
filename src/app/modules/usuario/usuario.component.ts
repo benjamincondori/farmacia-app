@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { DataTablesModule } from 'angular-datatables';
 import { User } from '../../interfaces/user.interface';
-import { UsuarioService } from './usuario.service';
+import { UsuarioService } from './service/usuario.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -29,7 +29,6 @@ export class UsuarioComponent {
   page: number = 1;
   limit: number = 10;
 
-  errorMessage: string | null = null;
   usuarios: User[] = [];
 
   constructor(
@@ -49,17 +48,16 @@ export class UsuarioComponent {
 
   // Cargar los usuarios
   obtenerUsuarios(): void {
-    this.usuarioService.getUsuarios().subscribe(
-      (data) => {
-        this.usuarios = data;
-        this.errorMessage = null;
+    this.usuarioService.getUsuarios().subscribe({
+      next: (usuarios) => {
+        this.usuarios = usuarios;
         this.cdr.markForCheck();
       },
-      (error) => {
-        this.errorMessage = 'Hubo un error al cargar los usuarios';
-        this.cdr.markForCheck();
-      }
-    );
+      error: (err) => {
+        console.error('Error al obtener los usuarios:', err);
+        this.alertsService.alertError('Error al obtener los usuarios');
+      },
+    });
   }
 
   // Confirmar la eliminación de un usuario

@@ -5,7 +5,7 @@ import { AlertsService } from '../../../shared/services/alerts.service';
 import { ValidatorsService } from '../../../shared/services/validators.service';
 import { PageHeaderComponent } from "../../../shared/components/page-header/page-header.component";
 import { CommonModule } from '@angular/common';
-import { UsuarioService } from '../usuario.service';
+import { UsuarioService } from '../service/usuario.service';
 
 @Component({
   selector: 'app-create-usuario',

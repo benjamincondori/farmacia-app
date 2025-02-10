@@ -20,19 +20,42 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="nombre" class="control-label">Nombre</label>
+                <label for="nombre_Rol" class="control-label">Nombre</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="nombre"
-                  formControlName="nombre"
+                  id="nombre_Rol"
+                  formControlName="nombre_Rol"
                   placeholder="Ej: Vendedor"
                 />
                 <span
-                  *ngIf="isValidField('nombre')"
+                  *ngIf="isValidField('nombre_Rol')"
                   class="form-text text-danger"
                 >
-                  * {{ getMessageError("nombre") }}
+                  * {{ getMessageError("nombre_Rol") }}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="descripcion" class="control-label"
+                  >Descripción</label
+                >
+                <textarea
+                  class="form-control"
+                  formControlName="descripcion"
+                  id="descripcion"
+                  rows="3"
+                  placeholder="Introduzca la descripción"
+                ></textarea>
+                <span
+                  *ngIf="isValidField('descripcion')"
+                  class="form-text text-danger"
+                >
+                  * {{ getMessageError("descripcion") }}
                 </span>
               </div>
             </div>

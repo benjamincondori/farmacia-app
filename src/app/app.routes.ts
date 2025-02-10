@@ -31,6 +31,17 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'roles-permisos',
+        loadChildren: () =>
+          import('./modules/roles-permisos/roles-permisos.routes').then(
+            (m) => m.RolesPermisosRoutes
+          ),
+      },
+      {
+        path: 'roles-permisos-usuario',
+        loadChildren: () => import('./modules/roles-permisos-usuario/roles-permisos-usuario.routes').then((m) => m.RolesPermisosUsuario),
+      },
+      {
         path: 'cliente',
         loadChildren: () =>
           import('./modules/cliente/cliente.routes').then(
@@ -86,7 +97,7 @@ export const routes: Routes = [
         path: '**',
         redirectTo: 'home',
         pathMatch: 'full',
-      }
+      },
     ],
   },
   {

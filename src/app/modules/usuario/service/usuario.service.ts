@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, Subject, tap } from 'rxjs';
-import { User } from '../../interfaces/user.interface';
-import { environment } from '../../../environments/environment.development';
+import { User } from '../../../interfaces/user.interface';
+import { environment } from '../../../../environments/environment.development';
 import { map } from 'jquery';
 
 const httpOptions = (token: string) => ({

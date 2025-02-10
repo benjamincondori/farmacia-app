@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <app-page-header
+    [title]="data.title"
+    [subtitle]="data.subtitle"
+    [name]="data.name"
+  ></app-page-header>
+
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card-box">
+        <div class="row mx-4">
+          <!-- Título del Formulario -->
+          <div class="col-12 text-center mb-4">
+            <h2 class="h2 fw-bold">Asignación de Roles a Usuario</h2>
+          </div>
+
+          <!-- Selección de Usuario -->
+          <div class="col-md-6 mb-3">
+            <label for="userSelect" class="form-label fw-semibold"
+              >Seleccionar Usuario:</label
+            >
+            <select
+              id="userSelect"
+              [(ngModel)]="selectedUser"
+              class="form-control"
+            >
+              <option [value]="user?.userId">{{ user?.fullname }}</option>
+            </select>
+          </div>
+
+          <!-- Selección de Roles (Múltiple) -->
+          <div class="col-md-6 mb-3">
+            <label for="roleSelect" class="form-label fw-semibold"
+              >Seleccionar Roles:</label
+            >
+            <select
+              id="roleSelect"
+              [(ngModel)]="selectedRoles"
+              multiple
+              class="form-control"
+            >
+              <option *ngFor="let rol of roles" [ngValue]="rol">
+                {{ rol.nombre_Rol }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Botón para asignar roles al usuario -->
+          <div class="col-12 text-center mt-3">
+            <button
+              (click)="asignarRoles()"
+              class="btn btn-primary btn-lg shadow mr-1"
+            >
+              Asignar Roles
+            </button>
+            <button
+              (click)="goToUsuarioRoles()"
+              class="btn btn-danger btn-lg shadow"
+            >
+              Cancelar
+            </button>
+          </div>
+
+          <!-- Mostrar resultados -->
+          <div *ngIf="asignaciones.length > 0" class="col-12 mt-4">
+            <h3 class="text-center">
+              Información de los Roles Asignados a {{ user?.fullname }}
+            </h3>
+            <ul class="list-group mt-3">
+              <li
+                *ngFor="let asignacion of asignaciones"
+                class="list-group-item"
+              >
+                <div class="d-flex justify-content-between">
+                  <span class="font-weight-bold text-primary">Usuario:</span>
+                  {{ user?.fullname }}
+                  <span class="font-weight-bold text-primary">Rol:</span>
+                  {{ asignacion.rol.nombre_Rol }}
+                </div>
+              </li>
+            </ul>
+
+            <!-- Botón para guardar -->
+            <div class="text-center mt-3">
+              <button
+                (click)="guardarRoles()"
+                class="btn btn-success btn-lg shadow"
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

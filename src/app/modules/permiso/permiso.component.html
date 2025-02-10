@@ -8,13 +8,32 @@
   <div class="row mb-5">
     <div class="col-12">
       <div class="card-box">
+        <div class="d-flex justify-content-between mb-2">
+          <!-- Selector de cantidad de registros -->
+          <div class="d-flex align-items-center">
+            <span class="me-2">Mostrando</span>
+            <select class="form-control mx-1" (change)="changeLimit($event)">
+              <option value="10">10</option>
+              <option value="20">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <span class="ms-2 text-nowrap">registros por página</span>
+          </div>
+
+          <!-- Campo de búsqueda -->
+          <div class="d-flex align-items-center">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar..."
+              (input)="searchTable($event)"
+            />
+          </div>
+        </div>
+
         <div class="table-responsive">
-          <table
-            id="table-permisos"
-            class="table table-hover mb-0 dts"
-            datatable
-            [dtOptions]="dtOptions"
-          >
+          <table id="table-permisos" class="table table-bordered table-hover mb-0 dts">
             <thead class="bg-dark text-center text-white text-nowrap">
               <tr style="cursor: pointer">
                 <th scope="col">Id</th>
@@ -23,17 +42,43 @@
               </tr>
             </thead>
             <tbody>
-              @for (permiso of permisos; track $index) {
-              <tr class="text-nowrap text-center">
-                <th scope="row" class="align-middle">{{ permiso.id }}</th>
-                <td class="align-middle">{{ permiso.nombre }}</td>
-                <td class="align-middle">
-                  {{ permiso.descripcion }}
+              <tr
+                *ngFor="
+                  let permiso of permisos
+                    | paginate
+                      : {
+                          itemsPerPage: limit,
+                          currentPage: page
+                        };
+                  let i = index
+                "
+                class="text-nowrap text-center"
+              >
+                <th scope="row" class="align-middle">
+                  {{ permiso.iD_Permiso }}
+                </th>
+                <td class="align-middle">{{ permiso.nombre_Permiso }}</td>
+                <td class="align-middle">{{ permiso.descripcion }}</td>
+              </tr>
+              <tr *ngIf="permisos.length === 0">
+                <td colspan="3" class="text-center">
+                  No se encontraron registros.
                 </td>
               </tr>
-              }
             </tbody>
           </table>
+
+          <div
+            *ngIf="permisos.length > 0"
+            class="d-flex justify-content-end mt-3"
+          >
+            <pagination-controls
+              class="custom-pagination"
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
         </div>
       </div>
     </div>

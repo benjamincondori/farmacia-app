@@ -10,7 +10,7 @@ import {
 import { ValidatorsService } from '../../../shared/services/validators.service';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { CommonModule } from '@angular/common';
-import { UsuarioService } from '../usuario.service';
+import { UsuarioService } from '../service/usuario.service';
 import { User } from '../../../interfaces/user.interface';
 
 @Component({
